@@ -8,6 +8,7 @@ items = ["espresso", "latte", "cappuccino"]
 
 
 def print_resources(res):
+    """Function to print available resources"""
     print(f'''
         Water: {res["water"]}ml
         Milk: {res["milk"]}ml
@@ -17,6 +18,7 @@ def print_resources(res):
 
 
 def check_resources(_choice):
+    """Function to accept user choice and verify with available stock"""
     dct = {"flag": True, "message": ""}
     required = Res.menu[_choice]["ingredients"]
     for key in required:
@@ -27,6 +29,7 @@ def check_resources(_choice):
 
 
 def compare_prices(payment, choice):
+    """Function to verify user payment to order cost if true deduct order cost from payment"""
     price_obj = {}
     cost = Res.menu[choice]["cost"]
     price_obj["fulfill"] = cost <= payment
@@ -38,6 +41,7 @@ def compare_prices(payment, choice):
 
 
 def order_process(choice):
+    """Function to process order and manage product quantity"""
     ingredients = Res.menu[choice]["ingredients"]
     for item in ingredients:
         storage[item] -= ingredients[item]
@@ -59,10 +63,10 @@ while not is_off:
             user_money = 0
             print("Insert coins")
             # Remember that quarters = $0.25, dimes = $0.10, nickles = $0.05, pennies = $0.01
-            user_money += float(input("How many pennies?")) * 0.01
-            user_money += float(input("How many nickles?")) * 0.05
-            user_money += float(input("How many dimes?")) * 0.10
-            user_money += float(input("How many quarters?")) * 0.25
+            user_money += int(input("How many pennies?")) * 0.01
+            user_money += int(input("How many nickles?")) * 0.05
+            user_money += int(input("How many dimes?")) * 0.10
+            user_money += int(input("How many quarters?")) * 0.25
             process_order = compare_prices(user_money, user_input)
             if not process_order["fulfill"]:
                 print("Sorry that's not enough money. Money refunded.")
